@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ARKK Daily</title>
+    <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+    <META HTTP-EQUIV="EXPIRES" CONTENT="0">
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="./css/arkinvest_daily.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  </head>
+  <body>
+      [<a href="./arkk.html">ARKK</a>] [<a href="./arkq.html">ARKQ</a>] [<a href="./arkw.html">ARKW</a>] [<a href="./arkg.html">ARKG</a>] [<a href="./arkf.html">ARKF</a>] [<a href="./new.html">菜雞專區</a>]
+<h1>ARKK - ARK Innovation ETF</h1>
+
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div id="tradingview_cbb70"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/AMEX-ARKK/" rel="noopener" target="_blank"><span class="blue-text">ARKK Chart</span></a> by TradingView</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+  new TradingView.widget(
+  {
+  "width": 900,
+  "height": 530,
+  "symbol": "AMEX:ARKK",
+  "interval": "D",
+  "timezone": "America/New_York",
+  "theme": "light",
+  "style": "3",
+  "locale": "en",
+  "toolbar_bg": "#f1f3f6",
+  "enable_publishing": false,
+  "save_image": false,
+  "container_id": "tradingview_cbb70"
+}
+  );
+  </script>
+</div>
+<!-- TradingView Widget END -->
+
+<div class="adsense">
+    廣告投放
+</div>
+
+<!-- ARK Daily Analysis BEGIN -->
+<div id="daily">
+  <div id="daily_date"></div>
+	<table id="table_id" class="display">
+	  <thead>
+		<tr>
+		  <th class='dt-head-left' rowspan='2'>Ticker</th>
+		  <th class='dt-head-left' rowspan='2'>Weight(%)</th>
+		  <th class='dt-head-left' rowspan='2'>Market Value($)</th>
+		  <th class='dt-head-left' rowspan='2'>Shares</th>
+		  <th class='dt-head-left' rowspan='2'>Shares Day Change</th>
+		  <th class='dt-head-left' colspan='2'>Value Change(%)</th>
+		</tr>
+		<tr>
+		  <td>1 Day</th>
+		  <td>5 Days</th>
+		</tr>
+	  </thead>
+	  <tbody>
+	  </tbody>
+	</table>
+  </div>
+</div>
+<script>
+
+d3.csv("https://raw.githubusercontent.com/evanslai/arkinvest/gh-pages/data/arkk_daily.csv", function(data) {
+    console.log(data);
+    $('#daily_date').text("As of "+data[0]['date'])
+    $('#table_id').DataTable({
+        data: data,
+        columns: [
+            { data : 'ticker', "width": "10%" },
+            { data : 'weight(%)', "width": "10%" },
+            { data : 'market value($)', "width": "15%" },
+            { data : 'shares', "width": "15%" },
+            { data : 'shares_1d_chg', "width": "15%" },
+            { data : 'value_1d_chg_pct' },
+            { data : 'value_5d_chg_pct' },
+        ],
+        "lengthChange": true,
+        "order": [[1, 'desc']],
+        "columnDefs": [{
+            "targets": 4,
+            "createdCell": function (td, cellData, rowData, row, col) {
+                if ( cellData < 0 ) {
+                    $(td).css('color', 'red')
+                }
+                else if ( cellData > 0 ) {
+                    $(td).css('color', 'green')
+                }
+            }
+        },{
+            "targets": 5,
+            "createdCell": function (td, cellData, rowData, row, col) {
+                if ( cellData < 0 ) {
+                    $(td).css('color', 'red')
+                }
+                else {
+                    $(td).css('color', 'green')
+                }
+            }
+        },{
+            "targets": 6,
+            "createdCell": function (td, cellData, rowData, row, col) {
+                if ( cellData < 0 ) {
+                    $(td).css('color', 'red')
+                }
+                else {
+                    $(td).css('color', 'green')
+                }
+            }
+        }]
+    });
+});
+
+</script>
+
+<!-- ARK Daily Analysis END -->
+
+<div class="adsense">
+    廣告投放
+</div>
+
+<!-- ARK Heatmap BEGIN -->
+<!-- ARK Heatmap END -->
+
+
+<!-- Foot BEGIN -->
+<table>
+    <tr>
+        <td>
+<!-- clustrmaps -->
+<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=300&t=tt&d=2hDNUGgc-vynK-E39H-Ysxyf10SVMzZhEFt4Z676xLM&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script>
+        </td>
+        <td>
+            免責聲明: 本網頁資訊僅為個人資料整理分享，不應視為投資標的或者投資決策判斷依據。
+            Limitation of Liability: The information provided on this site is for reference only.
+        </td>
+    </tr>
+</table>
+<!-- Foot END -->
+
+  </body>
+</html>
