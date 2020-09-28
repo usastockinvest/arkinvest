@@ -70,7 +70,7 @@
 </div>
 <script>
 
-d3.csv("https://raw.githubusercontent.com/usastockinvest/arkinvest/gh-pages/data/arkk_daily.csv", function(data) {
+d3.csv("https://raw.githubusercontent.com/usastockinvest/arkinvest/gh-pages/data/arkk_daily.csv?t="+Date.now(), function(data) {
     console.log(data);
     $('#daily_date').text("As of "+data[0]['date'])
     $('#table_id').DataTable({
