@@ -46,7 +46,7 @@
 </div>
 
 <!-- ARK Daily Analysis BEGIN -->
-<div id="daily">
+<div class="table">
   <div id="daily_date"></div>
 	<table id="table_id" class="display">
 	  <thead>
@@ -71,7 +71,7 @@
 <script>
 
 d3.csv("https://raw.githubusercontent.com/usastockinvest/arkinvest/gh-pages/data/arkk_daily.csv?t="+Date.now(), function(data) {
-    console.log(data);
+    //console.log(data);
     $('#daily_date').text("As of "+data[0]['date'])
     $('#table_id').DataTable({
         data: data,
@@ -129,6 +129,74 @@ d3.csv("https://raw.githubusercontent.com/usastockinvest/arkinvest/gh-pages/data
 </div>
 
 <!-- ARK Heatmap BEGIN -->
+
+<div class="table">
+	<table id="heatmap" class="display">
+	  <thead>
+		<tr>
+		  <th class='dt-head-left'>Ticker</th>
+		  <th class='dt-head-left'>Weight(%)</th>
+		  <th class='dt-head-left' id='tday'></th>
+		  <th class='dt-head-left' id='tday-1'></th>
+		  <th class='dt-head-left' id='tday-2'></th>
+		  <th class='dt-head-left' id='tday-3'></th>
+		  <th class='dt-head-left' id='tday-4'></th>
+		</tr>
+	  </thead>
+	  <tbody>
+	  </tbody>
+	</table>
+</div>
+
+
+<script>
+
+d3.csv("https://raw.githubusercontent.com/usastockinvest/arkinvest/gh-pages/data/arkk_shares_chg.csv?t="+Date.now(), function(data) {
+    var name, i=0, trading_dates = [];
+    
+    for (name in data[0]) {
+        ++i;
+        if (i>3) {
+            trading_dates.push(name);
+        }
+    }
+    console.log(trading_dates);
+    $('#tday').text(trading_dates[0])
+    $('#tday-1').text(trading_dates[1])
+    $('#tday-2').text(trading_dates[2])
+    $('#tday-3').text(trading_dates[3])
+    $('#tday-4').text(trading_dates[4])
+
+    $('#heatmap').DataTable({
+        data: data,
+        columns: [
+            { data : 'ticker', "width": "10%" },
+            { data : 'weight(%)', "width": "10%" },
+            { data : trading_dates[0] },
+            { data : trading_dates[1] },
+            { data : trading_dates[2] },
+            { data : trading_dates[3] },
+            { data : trading_dates[4] },
+        ],
+        "lengthChange": true,
+        "order": [[1, 'desc']],
+        "columnDefs": [{
+            "targets": [ 2,3,4,5,6 ],
+            "createdCell": function (td, cellData, rowData, row, col) {
+                if ( cellData < 0 ) {
+                    $(td).css('color', 'red')
+                }
+                else if ( cellData > 0 ) {
+                    $(td).css('color', 'green')
+                }
+            }
+        }]
+    });
+
+});
+
+</script>
+
 <!-- ARK Heatmap END -->
 
 
